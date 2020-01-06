@@ -1,0 +1,18 @@
+{% for cartItem in cart.cartitem_set.all %}
+<div class='row'>
+  <div class="col-md-3"><img src="{{cartItem.produit.image.url}}" alt="" class='img-fluid'></div>
+  <div class="col-md-7 text-center">
+    <strong class='text-secondary'>{{cartItem.produit.nom}} </strong><br>
+    <strong class='text-secondary'>{{cartItem.product_with_attribute.getValues}} </strong>
+    <div class='position-relative mx-auto' style='max-width: 80px;'>
+      <div class="spinner-left"><i class='fa fa-minus center text-secondary'></i></div>
+      <input type="number" class='cart-item-qtt text-center custom-input w-100' value={{cartItem.qtt}} data-product={{cartItem.produit.id}} {% if cartItem.product_with_attribute%}data-attribute="{{cartItem.product_with_attribute.id}}"{%endif%}>
+      <div class="spinner-right"><i class='fa fa-plus center text-secondary'></i></div>
+    </div>
+  </div>
+  <div class="col-md-1 position-relative delete-cart" data-product={{cartItem.id}}>
+    <i class="far fa-trash-alt center bg-light text-secondary p-1 rounded" ></i>
+  </div>
+</div>
+<hr>
+{% endfor %}

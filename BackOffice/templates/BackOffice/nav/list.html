@@ -1,0 +1,108 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% block styles %}
+<link href="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock styles %}
+
+
+{% block title %}Home Admin Products{% endblock title %}
+
+{% block body %}
+
+
+<div class="container">
+<h1 class="h3 mb-2 text-gray-800">Produits <small class='text-warning font-weight-light'>({{products_all_count}})</small></h1>
+    <div class="py-3"></div>
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Liste des produits</h6>
+      </div>
+
+          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>slug</th>
+                <th>categorie</th>
+                <th>prix</th>
+                <th>image</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>slug</th>
+                <th>categorie</th>
+                <th>prix</th>
+                <th>image</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for product in products %}
+              <tr>
+                <th>{{product.id}}</th>
+                <th>{{product.nom}}</th>
+                <th>{{product.slug}}</th>
+                <th>{{product.categorie}}</th>
+                <th>{{product.prix}}</th>
+                <th>{{product.image}}</th>
+              </tr>
+              {%endfor %}
+            </tbody>
+          </table>
+
+
+    </div>
+
+
+</div>
+
+<div class="container">
+
+
+  <span class="current">
+      Page {{ products.number }} sur {{ products.paginator.num_pages }}.
+  </span>
+
+
+  <ul class="pagination">
+    {% if products.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1"> << </a>
+    </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ products.previous_page_number }}" tabindex="-1">{{ products.previous_page_number }}</a>
+      </li>
+      {% endif %}
+
+      <li class="page-item active">
+        <a class="page-link" href="#"> {{ products.number }}</a>
+      </li>
+      {% if products.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ products.next_page_number }}"> {{ products.next_page_number }} </a>
+      </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ products.paginator.num_pages }}" tabindex="-1"> >> </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<!-- Page level plugins -->
+<script src="{% static '/admn/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+
+<!-- Page level custom scripts -->
+
+
+{% endblock scripts %}

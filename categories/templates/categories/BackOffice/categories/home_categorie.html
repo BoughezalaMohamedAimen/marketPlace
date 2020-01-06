@@ -1,0 +1,123 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% block styles %}
+<link href="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock styles %}
+
+
+{% block title %}Home Admin Products{% endblock title %}
+
+{% block body %}
+
+
+<div class="container">
+<h1 class="h3 mb-2 text-gray-800">Categories <small class='text-warning font-weight-light'>({{categories_all_count}})</small></h1>
+
+<div class="text-right">
+  <a class="btn btn-info text-white" href='{% url "NewCategorie" %}'>Ajouter</a>
+</div>
+    <div class="py-3"></div>
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Liste des categories</h6>
+      </div>
+
+      <div class="container py-2">
+        <div class="row rtl">
+          <div class="col-md-2 ml-auto">
+            <b>  Selection: <span class='text-secondary selected-count'> (0)</span> </b>
+            <select class='form-control' id="bulk-table-action" data-delete='{%url "DeleteCategorie"%}'>
+              <option value="" selected >Action</option>
+              <option value='delete'>suprimmer</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <br>
+            <a href="#" class="btn btn-secondary" id='action'>Action</a>
+          </div>
+        </div>
+
+      </div>
+
+          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class='custom-checkbox custom-checkbox-all'>id</th>
+                <th>Nom</th>
+                <th>parent</th>
+                <th>slug</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>id</th>
+                <th>parent</th>
+                <th>Nom</th>
+                <th>slug</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for categorie in categories %}
+              <tr>
+                <th> <input type="checkbox" class='custom-checkbox custom-checkbox-table-row'><a href="{% url 'UpdateCategorie' categorie.id%}">{{categorie.id}}</a></th>
+                <th>{{categorie.nom}}</th>
+                <th>{% if categorie.parent %}{{categorie.parent}}{%else%}-{%endif%}</th>
+                <th>{{categorie.slug}}</th>
+              </tr>
+              {%endfor %}
+            </tbody>
+          </table>
+
+
+    </div>
+
+
+</div>
+
+<div class="container">
+
+
+  <span class="current">
+      Page {{ categories.number }} sur {{ categories.paginator.num_pages }}.
+  </span>
+
+
+  <ul class="pagination">
+    {% if categories.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1"> << </a>
+    </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ categories.previous_page_number }}" tabindex="-1">{{ categories.previous_page_number }}</a>
+      </li>
+      {% endif %}
+
+      <li class="page-item active">
+        <a class="page-link" href="#"> {{ categories.number }}</a>
+      </li>
+      {% if products.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ categories.next_page_number }}"> {{ categories.next_page_number }} </a>
+      </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ categories.paginator.num_pages }}" tabindex="-1"> >> </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<!-- Page level plugins -->
+<script src="{% static '/admn/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admn/js/list_table_commands.js' %}"></script>
+
+<!-- Page level custom scripts -->
+
+
+{% endblock scripts %}

@@ -1,0 +1,4 @@
+xhtml2pdf 
+django 
+dateutil
+ckeditor

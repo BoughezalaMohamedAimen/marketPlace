@@ -1,0 +1,58 @@
+<div>
+
+  <p>
+  &nbsp;
+    Merci d’avoir effectué votre achat sur Dressme, suivez l’état de votre commande directement sur <a href="{% url 'HomeCommandePasseAdmin'%}"></a>onglet commande.
+  </p>
+<h1 style="text-align:center"> Commande numero {{commande.id}}</h1>
+
+<div style='padding: 15px;'>
+  <h3 style='color:#4e73df;margin-bottom: 10px;'>
+ &nbsp; Liste des Produits
+  </h3>
+</div>
+  <table style='width: 100%;'>
+    <thead>
+      <tr>
+        <th style="border: 1px solid gray">Produit</th>
+        <th style="border: 1px solid gray">Qtt</th>
+        <th style="border: 1px solid gray">Prix Unitaire</th>
+        <th style="border: 1px solid gray">Total</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th style="border: 1px solid gray">Produit</th>
+        <th style="border: 1px solid gray">Qtt</th>
+        <th style="border: 1px solid gray">Prix Unitaire</th>
+        <th style="border: 1px solid gray">Total</th>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for item in commande.commandeitem_set.all %}
+      <tr>
+        <th style="border: 1px solid gray">{{item.produit}}</th>
+        <th style="border: 1px solid gray">{{item.qtt}}</th>
+        <th style="border: 1px solid gray">{{item.prix}}</th>
+        <th style="border: 1px solid gray">{{item.total}}</th>
+      </tr>
+      {%endfor%}
+    </tbody>
+
+
+  </table>
+
+
+  <h3 style='color:#4e73df;margin-bottom: 10px;'>
+  &nbsp; Frais de livraison {{commande.livraison}} DZD
+  </h3>
+<br>
+<b style='display: inline-block; background: #1cc88a; color:white; padding: 5px;'> &nbsp; Total &nbsp; {{commande.getTotal}} DZD</b>
+
+<h3 style='color:#4e73df;margin-bottom: 10px;'>
+&nbsp; Adresse de livraison {{commande.livraison}} DZD
+</h3>
+<p>
+  &nbsp; {{commande.adresse}} {{commande.wilaya}}
+</p>
+</div>

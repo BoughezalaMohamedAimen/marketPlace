@@ -1,0 +1,112 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load accounts_extras %}
+
+{%  block styles %}
+
+{%  endblock styles %}
+{% block title %} Commande{% endblock title %}
+
+
+{% block body %}
+
+
+<div class="container-fluid pl-md-4">
+
+  <div class="row">
+    <div class="col-md-6 border-right">
+      <h4 class='text-white rounded bg-night d-inline-block p-1'>
+        Finaliser Commande
+      </h4>
+      <form method="post">
+        {{form.errors}}
+        {%csrf_token%}
+        <div class="row">
+          <div class="col-md-5">
+            <label for="id_nom" class="text-secondary">Nom:</label>
+            {{form.nom|add_class:'form-control'}}
+            <small class='text-night'>{{form.nom.errors.as_text}}</small>
+          </div>
+          <div class="col-md-4">
+            <label for="id_nom" class="text-secondary">Wilaya:</label>
+            {{form.wilaya|add_class:'form-control'}}
+            <small class='text-night'>{{form.wilaya.errors.as_text}}</small>
+          </div>
+          <div class="col-md-3">
+            <label for="id_nom" class="text-secondary">Commune:</label>
+            {{form.commune|add_class:'form-control'}}
+            <small class='text-night'>{{form.commune.errors.as_text}}</small>
+          </div>
+          <div class="col-md-12 pt-2">
+            <label for="id_nom" class="text-secondary">Adresse:</label>
+            {{form.adresse|add_class:'form-control'}}
+            <small class='text-night'>{{form.adresse.errors.as_text}}</small>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-md-6">
+            <label for="id_nom" class="text-secondary">Telephone:</label>
+            {{form.telephone|add_class:'form-control'}}
+            <small class='text-night'>{{form.telephone.errors.as_text}}</small>
+          </div>
+          <div class="col-md-6">
+            <label for="id_nom" class="text-secondary">E-mail:</label>
+            {{form.email|add_class:'form-control'}}
+            <small class='text-night'>{{form.email.errors.as_text}}</small>
+          </div>
+          <div class="col-md-12 pt-1">
+            <label for="id_nom" class="text-secondary">Information supplémentaire:</label>
+            {{form.info}}
+            <small class='text-night'>{{form.info.errors.as_text}}</small>
+          </div>
+        </div>
+        <div class="text-center my-3">
+              <button type='submit' class='button bg-day text-white'> Valider</button>
+        </div>
+      </form>
+
+
+
+    </div>
+    <div class="col-md-6">
+      <h4 class='text-day'><i class='fa fa-shopping-cart text-secondary'></i> Votre Panier </h4>
+      <hr>
+      <div class="container">
+        <div class='row'>
+          {% for cartItem in cart.cartitem_set.all %}
+          <div class="col-md-6">
+            <div class='row'>
+              <div class="col-md-3"><img src="{{cartItem.produit.image.url}}" alt="" class='img-fluid'></div>
+              <div class="col-md-7 text-center">
+                <a href="{% url 'single_product' cartItem.produit.id %}"><small class='text-secondary'>{{cartItem.produit.nom}}</small></a><br>
+                <small class='text-secondary'>{{cartItem.product_with_attribute.getValues}}</small>
+                <div class='position-relative mx-auto' style='max-width: 80px;'>
+                  <div class="spinner-left"><i class='fa fa-minus center text-secondary'></i></div>
+                  <input type="number" class='cart-item-qtt text-center custom-input w-100' value={{cartItem.qtt}} data-product={{cartItem.produit.id}} {% if cartItem.product_with_attribute%}data-attribute="{{cartItem.product_with_attribute.id}}"{%endif%}>
+                  <div class="spinner-right"><i class='fa fa-plus center text-secondary'></i></div>
+                </div>
+              </div>
+              <div class="col-md-1 position-relative delete-cart" data-product={{cartItem.id}}>
+                <i class="far fa-trash-alt center bg-light text-secondary p-1 rounded"></i>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+
+
+
+
+
+
+{% block scripts %}
+
+{% endblock scripts %}

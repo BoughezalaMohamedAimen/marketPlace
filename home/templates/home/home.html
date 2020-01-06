@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%  block styles %}
+
+{%  endblock styles %}
+{% block title %} Home Page{% endblock title %}
+
+
+{% block body %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 pt-md-5">
+        <nav class='position-relative'>
+          <a href="" class="side-menu-link text-secondary">Lorem ipsum</a>
+          <a href="" class="side-menu-link text-secondary">Essequos</a>
+          <a href="" class="side-menu-link text-secondary">molestiae In</a>
+          <a href="" class="side-menu-link text-secondary">Incidunt</a>
+          <a href="" class="side-menu-link text-secondary">quisquam Illum</a>
+        </nav>
+    </div>
+    <div class="col-md-6">
+      {% include 'slider.html' %}
+    </div>
+    <div class="col-md-3">
+      <div class="container">
+        <img src="{% static 'img/banner1.jpg'%}" alt="" class="img-fluid shadow border ">
+      </div>
+      <div class="container py-2">
+        <img src="{% static 'img/banner2.jpg'%}" alt="" class="img-fluid shadow border ">
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
+
+
+
+
+
+
+{% block scripts %}
+
+{% endblock scripts %}

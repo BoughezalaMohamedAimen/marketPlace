@@ -1,0 +1,141 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% load accounts_extras %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+{% block title %}Single Product{% endblock title %}
+
+{% block body %}
+<span class='d-none productid'>{{product.id}}</span>
+<div class="container">
+
+<h1>{{product.nom}}</h1>
+    <form method='post' enctype="multipart/form-data" id='productattributes'>
+
+          <div class="text-right">
+            <button class="btn-info btn" type='submit' >Sauvgarder</button>
+          </div>
+      {% csrf_token %}
+  <div class="container py-3">
+    <div class="row">
+      {%for productattribute in productattributes %}
+      <div class="col-md-3">
+        <div class="alert alert-warning position-relative">
+          <div  style='position: absolute;top: 5px;right: 5px;'>
+            <a  class='delete text-primary' href="{% url 'DeleteProductAttribute'%}?elements={{productattribute.id}}"><i class='fa fa-trash'></i></a>
+          </div>
+          <b>{%for attr in productattribute.allattributevalues%} {{attr.value}}  {%endfor%}</b><br>
+          <b>stock:</b>{{productattribute.stock}}<br>
+          <b>prix:</b>{{productattribute.prix}}<br>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+
+      <!----------------------- ATTRIBUTES ----------------------->
+      <div class="container">
+        <div class="card shadow mb-4 border">
+
+                <a href="#AttrAdd" class="d-block card-header py-3 bg-primary" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="AttrAdd">
+                  <h6 class="m-0 font-weight-bold text-white">Ajouter des attributs</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="AttrAdd" style="">
+                  <div class="card-body">
+
+
+
+                    <div class="container">
+                      <div class="row">
+                        {%for attribute in attributes%}
+                        <div class="col-md attribute" >
+                          <div class="card shadow mb-4 border">
+
+                                  <a href="#{{attribute.nom}}" class="d-block card-header py-3 bg-info" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="{{attribute.nom}}">
+                                    <h6 class="m-0 font-weight-bold text-white">{{attribute.nom}}</h6>
+                                  </a>
+                                  <!-- Card Content - Collapse -->
+                                  <div class="collapse show" id="{{attribute.nom}}" style="">
+                                    <div class="card-body">
+
+                                      {% for value in attribute.attributevalue_set.all %}
+                                          <span class='attribute-value p-1 rounded d-inline-block' data-attribute-name='{{attribute}}' data-value-id='{{value.id}}'>{{value}}</span>
+                                      {%endfor%}
+
+                                    </div>
+                                  </div>
+                                </div>
+                        </div>
+                        {%endfor%}
+                      </div>
+                    </div>
+
+
+
+
+
+
+
+                  </div>
+                  <div class="py-3 text-center">
+                      <div class="btn btn-success generate">GENERER LES ATTRIBUTS</div>
+                      <hr>
+                        <div class=" container py-3">
+                            <div class="row result">
+
+                            </div>
+                        </div>
+
+                  </div>
+                </div>
+              </div>
+      </div>
+
+
+
+    </form>
+</div>
+
+
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<script src="{% static 'admn/js/productAttribute.js' %}"></script>
+
+
+{% endblock scripts %}
+
+
+
+
+  <!-- <form method="post" class="login"  action="https://orimark.dz/wp-login.php">
+    <div class="block-content">
+    <div class="col-reg registered-account">
+      <div class="email-input">
+      <input type="text" class="form-control input-text username" name="username" id="username" placeholder="Nom d'utilisateur">
+      </div>
+      <div class="pass-input">
+      <input class="form-control input-text password" type="password" placeholder="Mot de passe" name="password" id="password">
+      </div>
+      <div class="ft-link-p">
+      <a href="https://orimark.dz/my-account/lost-password/" title="Mot de passe oublié">Mot de passe oublié ?</a>
+      </div>
+      <div class="actions">
+      <div class="submit-login">
+      <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="47a2984f4c"><input type="hidden" name="_wp_http_referer" value="/checkout/">					<input type="submit" class="button btn-submit-login" name="login" value="Se connecter">
+      </div>
+      </div>
+      <div id="login_message"></div>
+    </div>
+
+    </div>
+</form> -->

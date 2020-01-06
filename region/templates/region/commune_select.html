@@ -1,0 +1,7 @@
+
+<select name="{{request.GET.prefix}}commune" class='w-100 form-control border-radius-30'>
+    <option value="" selected>---------</option>
+  {% for commune in communes %}
+    <option value="{{commune.id}}">{{commune}}</option>
+  {%endfor%}
+</select>

@@ -1,0 +1,36 @@
+.cart-tab
+{
+  position:fixed;
+  right:-100%;
+  top:0;
+  height: 100vh;
+  -webkit-transition: .5s all;
+  -o-transition: .5s all;
+  transition: .5s all;
+  z-index: 888
+}
+/* .cart-tab-header
+{
+  position:fixed;
+  right:0;
+  top:15%;
+  height: 50px;
+  width: 50px;
+  -webkit-transition: 1s all;
+  -o-transition: 1s all;
+  transition: 1s all;
+
+} */
+.close
+{
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  background: powderblue;
+}

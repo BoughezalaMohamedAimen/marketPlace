@@ -1,0 +1,187 @@
+{% extends 'BackOffice/baseadmin.html'%}
+{%block title%} Modifer  mes info {%endblock title%}
+
+{% load accounts_extras %}
+{% load humanize %}
+
+{%block body%}
+
+<div class="container">
+  <div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">commandes passé (mois)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{user.commande_set.all|length}} <br> <a href="{% url 'HomeCommandePasseAdmin'%}" target="_blank" class="badge badge-primary">Consulter la liste</a></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">commandes reçu (mois)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande_m|length}} <br> <a href="{% url 'HomeCommandeAdmin'%}" target="_blank" class="badge badge-info">Consulter la liste</a></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-store fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Solde</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{request.user.userprofile.solde|intcomma}} DZD <br> <a href="{% url 'NewProduct'%}" target="_blank" class="badge badge-success">Demander Payment</a> </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a href="{% url 'HomeProductAdmin' %}" class="text-warning">Produits</a></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{user.produit_set.all|length}} <br> <a href="{% url 'NewProduct'%}" target="_blank" class="badge badge-warning">Ajouter produit</a></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-box-open fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <form method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md">
+        <h3 class='font-weight-light'>Modifier mes infos:</h3>
+      </div>
+      <div class="col-md-1">
+        <button class='btn-success btn ' type='submit'> Enregistrer</button>
+      </div>
+    </div>
+    {% csrf_token %}
+    <div class="container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6 pt-0">
+
+            <div class="pb-2">
+              <label for="">E-mail:</label>
+              {{ userForm.email|add_class:"w-100 form-control border-radius-30 " }}
+              {{ userForm.email.errors}}
+            </div>
+
+
+            <div class="pb-2">
+              <label for="">Telephone:</label>
+              {{ form.telephone|add_class:"w-100 form-control border-radius-30 " }}
+              {{ form.telephone.errors}}
+            </div>
+
+            <div class="row">
+              <div class="col-md">
+                <div class="pb-2">
+                  <label for="">Wilaya:</label>
+                  {{ form.wilaya|add_class:"w-100 form-control border-radius-30 " }}
+                  {{ form.wilaya.errors}}
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="pb-2">
+                  <label for="">Commune:</label>
+                  <div class="commune_result">
+                    <select name="profile-commune" class='w-100 form-control border-radius-30'>
+                        <option value="" selected>---------</option>
+                      {% for commune in request.user.userprofile.wilaya.commune_set.all %}
+                        <option value="{{commune.id}}" {% if commune == request.user.userprofile.commune %} selected {%endif%}>{{commune}}</option>
+                      {%endfor%}
+                    </select>
+                  </div>
+                  {{ form.commune.errors}}
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="col-md-6">
+
+            <div class="pb-2">
+              <label for="">Nom:</label>
+              {{ userForm.first_name|add_class:"w-100 form-control border-radius-30 " }}
+              {{ userForm.first_name.errors}}
+            </div>
+            <div class="pb-2">
+              <label for="">Prénom:</label>
+              {{ userForm.last_name|add_class:"w-100 form-control border-radius-30 " }}
+              {{ userForm.last_name.errors}}
+            </div>
+            <div class="pb-2">
+              <label for="">Adresse:</label>
+              {{ form.adresse|add_class:"w-100 form-control border-radius-30 " }}
+              {{ form.adresse.errors}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+ {%endblock body%}
+
+{% block scripts%}
+  <script>
+    $(document).ready(function(){
+      $('select[name=profile-wilaya]').change(function(){
+        $.get({
+          data:{"prefix":"profile-"},
+          url:"/commune/"+$(this).val(),
+          success:function(result){
+              $('.commune_result').html(result);
+          }
+
+        })
+      })
+    })
+  </script>
+ {%endblock scripts%}

@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{%block title%} Login {%endblock title%}
+
+{% load accounts_extras %}
+
+{% load static %}
+
+{%block body%}
+
+<div class="container-blur p-0">
+  <div class="">
+    <div class="col-md-3 center shadow  pb-4 login-box py-3">
+      <h1 class="pt-4 text-white hand-font text-center pb-3">Login </h1>
+      <div class="row">
+        <!-- <div class="col-2 offset-5">
+              <img src="{% static '/img/login.jpeg' %}"  class='img-fluid rounded-circle shadow login-avatar'>
+        </div> -->
+      </div>
+      <!-- <h5 class="text-center font-weight-light text-white">CONNEXION<br><p class="text-white">
+
+      </p></h5> -->
+
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="container text-light">
+          <div class="col-md-10 offset-md-1">
+            <div class="pb-2">
+              <label for="">E-mail:</label>
+              <div class='position-relative'>
+                {{ form.username|add_class:"w-100 login-input border-radius-30 shadow" }}
+              </div>
+
+
+            </div>
+            <div class="pb-2">
+              <label for="">Mot de Passe:</label>
+              {{ form.password|add_class:"w-100 login-input border-radius-30 shadow" }}
+            </div>
+
+            <div class="py-1"><small class="text-danger">{{form.non_field_errors | safe}}</small></div>
+            {% if 'compte' in form.non_field_errors.as_text  %}
+            <a class='text-light font-weight-light' href="{% url 'activate_account_form' %}">Activer mon compte</a>
+            {%endif%}
+            <div class="text-center py-3">
+              <button type="submit" class="text-white btn btn-block bg-day border-0">Connexion</button>
+            </div>
+            <a class='text-day font-weight-light' href="{% url 'password_reset'%}"> Mot de passe oublié ? </a>
+          </div>
+
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+ {%endblock body%}

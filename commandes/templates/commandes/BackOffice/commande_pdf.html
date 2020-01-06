@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PDF</title>
+  <style>
+    @page {
+       size: a4 portrait;
+      margin:1cm;
+   }
+
+
+
+    th {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top: 1px solid gray;
+      border-bottom: 1px solid gray;
+    }
+    td {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-bottom: 1px solid gray;
+    }
+.barrecode
+{
+  margin-bottom:3mm;
+}
+.text-center{
+    text-align: center;
+}
+.commande-content
+{
+  margin-bottom: 1cm;
+}
+.font-header
+{
+  font-size:18px;
+}
+.mb-2{
+  margin-bottom: 3px;
+}
+.text-right {
+  text-align: right;
+}
+  </style>
+</head>
+<body>
+  {% for commande in commandes %}
+      <div class='commande-content'>
+        <h1 class='text-center'> Bon de livraison  Dressme.com</h1><br>
+        <div class='font-header mb-2'>Client: {{commande.nom}}</div>
+          <div class='font-header mb-2'>Telephone: {{commande.telephone}}</div>
+          <div class='font-header mb-2'>E-mail: {{commande.email}}</div>
+          <div class='font-header mb-2'>Adresse: {{commande.adresse}} {{commande.wilaya}} {{commande.commune}}</div>
+          <div class="text-center">
+            <br>
+            Details de la commande
+          </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Ref</th>
+              <th>Produit</th>
+              <th>Prix unitaire</th>
+              <th>Qtt</th>
+              <th>Total</th>
+            </tr>
+
+          </thead>
+          <tbody>
+              {% for item in commande.commandeitem_set.all %}
+            <tr class="text-center">
+              <td>{{item.reference}}</td>
+              <td>{{item.produit}}</td>
+              <td>{{item.prix}}</td>
+              <td>{{item.qtt}}</td>
+              <td>{{item.total}}</td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+      </div>
+      <div class=" font-header text-right">
+        Sous-total: {{commande.getTotalProduis}}
+      </div>
+      <div class=" font-header text-right">
+        Livraison: {{commande.livraison}}
+      </div>
+      <div class="font-header text-right">
+        Total: {{commande.getTotal}}
+      </div>
+      <hr>
+      <div class="barrecode text-center">
+        <pdf:barcode value="{{commande.barre_code}}"/>
+      </div>
+
+      <div class="text-center">{{commande.barre_code}}</div>
+
+
+
+
+      <pdf:nextpage />
+  {%endfor%}
+</body>
+</html>

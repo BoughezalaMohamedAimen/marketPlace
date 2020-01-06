@@ -1,0 +1,55 @@
+.main-nav
+{
+  position:fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  border-top: 1px solid rgba(66,66,66,.3);
+  z-index: 555
+}
+
+.main-nav ul
+{
+  list-style-type: none;
+}
+.main-nav-item
+{
+  border-right: 1px solid rgba(66,66,66,.1);
+}
+.filtrer
+{
+  position:fixed;
+  top:0;
+  left: 0;
+  width: 100vw;
+  border-bottom: 1px solid rgba(66,66,66,.3);
+  z-index: 556
+}
+.filtre
+{
+  position: fixed;
+  top: 0;
+  right: -100vw;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+  z-index: 556
+}
+
+.fermer
+{
+  position: fixed;
+  background: rgba(133, 20, 75, .8);
+  top: 5%;
+  left: -100%;
+  width: 30px;
+  height: 30px;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+  z-index: 557;
+  border-radius: 0 5px 5px 0
+}

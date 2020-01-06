@@ -1,0 +1,34 @@
+.spinner-right
+{
+  position: absolute;
+  top: 50%;
+  right:8px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+
+}
+
+.spinner-left
+{
+  position: absolute;
+  top: 50%;
+  left:8px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+
+}
+.spinner-right i:hover,.spinner-left i:hover
+{
+  color:tomato !important;
+}
+.custom-input
+{
+  padding: 5px;
+  border:0;
+}

@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+
+
+{%  block styles %}
+
+{%  endblock styles %}
+{% block title %} Boutique{% endblock title %}
+
+
+{% block body %}
+
+
+<div class="container py-5 pl-md-0">
+  <div class="row">
+    <div class="col-md">
+      <div class="row">
+        {% for produit in produits %}
+        <div class="col-md-3 mb-1">
+          <div class="container border p-2 text-center">
+            <img src="{{produit.image.url}}" alt="" class="img-fluid">
+            <h5 class='text-center'><a href="{% url 'single_product' produit.slug %}">{{produit.nom}}</a></h5>
+            {% if produit.productattribute_set.all%}
+            <select class='form-control'>
+              {% for product_with_attributes in produit.productattribute_set.all%}
+                <option value="{{product_with_attributes.id}}">{{product_with_attributes.getValues}}</option>
+              {%endfor%}
+            </select>
+            {%endif%}
+            <a href="#" class="button bg-day add-to-cart" data-product={{produit.id}}> <small><i class="fa fa-shopping-cart"></i></small>  Ajouter au panier</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+
+
+
+
+
+
+{% block scripts %}
+
+{% endblock scripts %}

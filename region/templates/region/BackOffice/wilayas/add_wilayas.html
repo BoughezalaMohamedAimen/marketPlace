@@ -1,0 +1,103 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% load accounts_extras %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+{% block title %}Single Product{% endblock title %}
+
+{% block body %}
+
+<div class="container">
+
+    <form method='post' enctype="multipart/form-data">
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            <h3 class='font-weight-light'>Nouvelle Wilaya:</h3>
+          </div>
+          <div class="col-md-1">
+            <button class='btn-success btn ' type='submit'> Ajouter</button>
+          </div>
+        </div>
+      </div>
+      {% csrf_token %}
+      <div class="container">
+        <div class="row my-2">
+          <div class="col-md">
+            Nom:
+            {{form.nom|add_class:"form-control"}}
+            <span class='text-danger'>{{form.nom.errors}}</span>
+          </div>
+          <div class="col-md">
+            Code:
+            {{form.code|add_class:"form-control"}}
+            <span class='text-danger'>{{form.code.errors}}</span>
+          </div>
+          <div class="col-md">
+            Prix  livraison:
+            {{form.prix|add_class:"form-control"}}
+            <span class='text-danger'>{{form.prix.errors}}</span>
+          </div>
+        </div>
+      </div>
+
+    </form>
+</div>
+
+
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<script type="text/javascript">
+  var classname = document.getElementsByClassName("imagefield");
+
+  var myFunction = function(e) {
+
+      thiss=this;
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var image=thiss.previousSibling.previousSibling
+        while(true)
+        {
+          try
+          {
+            if(image.classList.contains("image-data")){
+              image.setAttribute('src', e.target.result);
+              break;
+            }
+          }catch(e){}
+
+          image=image.previousSibling
+        }
+
+
+      }
+
+      reader.readAsDataURL(this.files[0]);
+    }
+  };
+
+  for (var i = 0; i < classname.length; i++) {
+      classname[i].addEventListener('change', myFunction, false);
+  }
+
+
+
+
+
+
+
+</script>
+
+
+{% endblock scripts %}

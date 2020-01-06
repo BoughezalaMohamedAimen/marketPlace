@@ -1,0 +1,42 @@
+a:hover
+{
+  color:#ff3c20
+}
+
+.bg-day
+{
+  background: #ff3c20;
+}
+.text-day
+{
+  color: #ff3c20;
+}
+
+.bg-night
+{
+  background: #ff3c20;
+}
+.text-night
+{
+  color: #ff3c20;
+}
+
+.button
+{
+  display: inline-block;
+  padding: 5px 10px;
+  -webkit-transition: .3s all;
+  -o-transition: .3s all;
+  transition: .3s all;
+}
+
+.button.bg-day
+{
+  border:2px solid #ff3c20;
+  color: white;
+}
+.button.bg-day:hover
+{
+  color: #ff3c20 !important;
+  background: transparent;
+}

@@ -1,0 +1,185 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% load accounts_extras %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+{% block title %}Single Product{% endblock title %}
+
+{% block body %}
+
+<div class="container">
+{%for categorie in categories%}
+<span class="d-none" data-id='{{categorie.id}}'>{{categorie.commission}}</span>
+{%endfor%}
+    <form method='post' enctype="multipart/form-data">
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            <h3 class='font-weight-light'>Nouveau Produit:</h3>
+          </div>
+          <div class="col-md-1">
+            <button class='btn-success btn ' type='submit'> Ajouter</button>
+          </div>
+        </div>
+      </div>
+      {% csrf_token %}
+      <div class="container">
+        <div class="row my-2">
+          <div class="col-md">
+            Titre du produit:
+            {{form.nom|add_class:"form-control"}}
+            <span class='text-danger'>{{form.nom.errors}}</span>
+          </div>
+          <div class="col-md">
+            Categorie:
+            {{form.categorie|add_class:"form-control"}}
+            <span class='text-danger'>{{form.categorie.errors}}</span>
+          </div>
+        </div>
+        <div class="row my-2">
+          {% if user.is_superuser%}
+          <div class="col-md">
+            Meta Seo:
+            {{form.seo|add_class:"form-control"}}
+            <span class='text-danger'>{{form.meta.errors}}</span>
+          </div>
+          {%endif%}
+
+        </div>
+        <div class="row my-2">
+          <div class="col-md">
+            Stock:
+            {{form.stock|add_class:"form-control w-100"}}
+            <span class='text-danger'>{{form.stock.errors}}</span>
+          </div>
+          <div class="col-md">
+            Prix:
+            {{form.prix|add_class:"form-control"}}
+            <span class='text-danger'>{{form.prix.errors}}</span>
+          </div>
+          <div class="col-md">
+            Prix promo:
+            {{form.prix_promotionel|add_class:"form-control"}}
+            <span class='text-danger'>{{form.promo.errors}}</span>
+          </div>
+          <div class="col-md">
+            <span>Net a recevoir:</span> <br>
+            <span class='text-success montant-net'></span>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-md-7">
+            Description:<br>
+            {{form.description|add_class:"form-control"}}
+            <span class='text-danger'>{{form.description.errors}}</span>
+          </div>
+          <div class="col-md-5">
+            <div class="row my-2">
+              <div class="col-md-6">
+                Image1:<br>
+                <img src="{% static '/img/image.jpg'%}" alt="" class="img-fluid image-data">
+                {{form.image|add_class:"form-control btn btn-primary imagefield"}}
+                <span class='text-danger'>{{form.image.errors}}</span>
+              </div>
+              <div class="col-md-6">
+                Image2:<br>
+                <img src="{% static '/img/image.jpg'%}" alt="" class="img-fluid image-data">
+                {{form.image2|add_class:"form-control btn btn-primary imagefield"}}
+                <span class='text-danger'>{{form.image2.errors}}</span>
+              </div>
+              <div class="col-md-6">
+                Image3:<br>
+                <img src="{% static '/img/image.jpg'%}" alt="" class="img-fluid image-data">
+                {{form.image3|add_class:"form-control btn btn-primary imagefield"}}
+                <span class='text-danger'>{{form.image3.errors}}</span>
+              </div>
+              <div class="col-md-6">
+                Image4:<br>
+                <img src="{% static '/img/image.jpg'%}" alt="" class="img-fluid image-data">
+                {{form.image4|add_class:"form-control btn btn-primary imagefield"}}
+                <span class='text-danger'>{{form.image4.errors}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </form>
+</div>
+
+
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<script type="text/javascript">
+  var classname = document.getElementsByClassName("imagefield");
+
+  var myFunction = function(e) {
+
+      thiss=this;
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var image=thiss.previousSibling.previousSibling
+        while(true)
+        {
+          try
+          {
+            if(image.classList.contains("image-data")){
+              image.setAttribute('src', e.target.result);
+              break;
+            }
+          }catch(e){}
+
+          image=image.previousSibling
+        }
+
+
+      }
+
+      reader.readAsDataURL(this.files[0]);
+    }
+  };
+
+  for (var i = 0; i < classname.length; i++) {
+      classname[i].addEventListener('change', myFunction, false);
+  }
+
+
+$(document).ready(function(){
+  $('input[name=prix],input[name=prix_promotionel],select[name=categorie]').change(function(){
+    var cat=$('select[name=categorie]').val()
+    var prix=parseInt($('input[name=prix]').val())
+    var promo=parseInt($('input[name=prix_promotionel]').val())
+    if (cat!='')
+    {
+      var commission=parseInt($('span[data-id='+cat+']').html())
+      if(promo>0)
+        $('.montant-net').html(promo-50-promo*commission/100)
+        else
+        if(prix>0)
+          $('.montant-net').html(prix-50-prix*commission/100)
+    }else $('.montant-net').html('veuillez choisir une categorie')
+  })
+})
+
+
+
+
+</script>
+
+
+{% endblock scripts %}

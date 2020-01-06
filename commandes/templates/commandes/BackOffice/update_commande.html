@@ -1,0 +1,245 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% block styles %}
+{% load humanize %}
+
+<link href="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+{% endblock styles %}
+
+
+{% block title %}Home Admin Products{% endblock title %}
+
+{% block body %}
+
+
+<div class="container" style='overflow-x: scroll;'>
+{% if request.user.is_superuser %}
+<div class="row">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Commande numero ({{commande.id}})</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande.getTotal|intcomma}} DZD</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success  mb-1">{{commande.email}}</div>
+            <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande.getTotal|intcomma}} DZD</div> -->
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info  mb-1">{{commande.readeablePhone}}</div>
+            <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande.getTotal|intcomma}} DZD</div> -->
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-phone fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning  mb-1">{{commande.nom}}</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande.wilaya}}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-user fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{%endif%}
+<!-- <div class="text-right">
+  <a class="btn btn-info text-white" href='{% url "NewProduct" %}'>Ajouter</a>
+</div> -->
+    <div class="py-3"></div>
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fas fa-box-open"></i> Liste des produits</h6>
+      </div>
+
+          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th class='bg-white'>reference</th>
+                <th class='bg-white'>produit</th>
+                {%if request.user.is_superuser %}
+                <th class='bg-white'>vendeur</th>
+                <th class='bg-white'>e-mail</th>
+                <th class='bg-white'>Tel</th>
+                <th class='bg-white'>adresse</th>
+                {%endif%}
+                <th class='bg-white'>prix</th>
+                <th class='bg-white'>qtt</th>
+                <th class='bg-white'>total</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th class='bg-white'>reference</th>
+                <th class='bg-white'>produit</th>
+                {%if request.user.is_superuser %}
+                <th class='bg-white'>vendeur</th>
+                <th class='bg-white'>e-mail</th>
+                <th class='bg-white'>Tel</th>
+                <th class='bg-white'>adresse</th>
+                {%endif%}
+                <th class='bg-white'>prix</th>
+                <th class='bg-white'>qtt</th>
+                <th class='bg-white'>total</th>
+
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for commandeItem in commande.commandeitem_set.all %}
+              {% if commandeItem.get_vendor == request.user or request.user.is_superuser %}
+              <tr>
+                <th class='bg-white'><small>{{commandeItem.reference}}</small></th>
+                <th class='bg-white'><small><a href='#'  target='_blank'>{{commandeItem.produit}} </a></small></th>
+                {%if request.user.is_superuser %}
+                <th class='bg-white'><small>{{commandeItem.get_vendor}}</small></th>
+                <th class='bg-white'><small>{{commandeItem.get_vendor.email}}</small></th>
+                <th class='bg-white'><small>{{commandeItem.get_vendor.userprofile.telephone}}</small></th>
+                <th class='bg-white'><small>{{commandeItem.get_vendor.userprofile.adresse}}</small></th>
+                {%endif%}
+                <th class='bg-white'><small>{{commandeItem.prix}}</small></th>
+                <th class='bg-white'><small>{{commandeItem.qtt}}</small></th>
+                <th class='bg-white'><small>{{commandeItem.total}}</small></th>
+              </tr>
+              {%endif%}
+              {%endfor %}
+            </tbody>
+          </table>
+
+
+    </div>
+
+
+</div>
+{% if request.user.is_superuser %}
+<div class="container">
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-truck"></i> Information sur la livraison</h6>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md border-right">
+          <p><b>Wilaya :</b><br>
+            {{commande.wilaya}}
+          </p>
+          <p><b>Adresse :</b><br>
+            {{commande.adresse}}
+          </p>
+        </div>
+        <div class="col-md">
+          <p><b>Frais de livraison :</b><br>
+            {{commande.livraison|intcomma}} DZD
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-success"><i class="fas fa-info-circle"></i> Information supplémentaire</h6>
+    </div>
+    <div class="card-body">
+
+      <p><b>message du client :</b><br>
+        {{commande.info}}
+      </p>
+    </div>
+  </div>
+
+
+</div>
+{%endif%}
+<div class="modal fade" id="changeCatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CHANGER CATEGORIE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'ProduitCategorieBulk'%}" method='get'>
+          <input type="hidden" name='elementsBulk'>
+          <select name="catBulk"   class='selectpicker form-control bg-white border'  data-live-search='true' title='Catgories'>
+            {%for categorie in categories %}
+            <option value="{{categorie.id}}">{{categorie}}</option>
+            {%endfor%}
+
+          </select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary changer-categorie-bulk">Sauvgarder</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<!-- Page level plugins -->
+<script src="{% static '/admn/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/admn/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="{% static 'admn/js/list_table_commands.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $('.filter').click(function(){
+      window.location.assign('{% url "HomeProductAdmin"%}'+'?cat='+$('select[name=cat]').val()+'&keyword='+$('input[name=keyword]').val())
+
+    })
+  })
+</script>
+
+
+<!-- Page level custom scripts -->
+
+
+{% endblock scripts %}

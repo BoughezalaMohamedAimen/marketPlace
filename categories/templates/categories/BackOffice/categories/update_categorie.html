@@ -1,0 +1,96 @@
+{% extends 'BackOffice/baseadmin.html' %}
+{% load static %}
+{% load accounts_extras %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+{% block title %}Single Product{% endblock title %}
+
+{% block body %}
+
+<div class="container">
+
+    <form method='post' enctype="multipart/form-data">
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            <h3 class='font-weight-light'>Modifier Categorie:</h3>
+          </div>
+          <div class="col-md-1">
+            <button class='btn-success btn ' type='submit'> Publier</button>
+          </div>
+        </div>
+      </div>
+      {% csrf_token %}
+      <div class="container">
+        <div class="row my-2">
+          <div class="col-md">
+            Nom de la categorie:
+            {{form.nom|add_class:"form-control"}}
+            <span class='text-danger'>{{form.nom.errors}}</span>
+          </div>
+
+        </div>
+        <div class="row my-2">
+          <div class="col-md">
+            Slug (seo):
+            {{form.slug|add_class:"form-control"}}
+            <span class='text-danger'>{{form.slug.errors}}</span>
+          </div>
+          <div class="col-md">
+            Categorie Parente:
+            {{form.parent|add_class:"form-control"}}
+            <span class='text-danger'>{{form.parent.errors}}</span>
+          </div>
+
+
+
+        </div>
+        <div class="row py-2">
+          <div class="col-md-5">
+            Image:
+            {{form.image}}
+              <span class='text-danger'>{{form.parent.errors}}</span>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+
+
+
+    </form>
+</div>
+
+
+{% endblock body %}
+
+
+
+
+
+{% block scripts %}
+<script type="text/javascript">
+function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      input.previousSibling.previousSibling.setAttribute('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
+
+{% endblock scripts %}

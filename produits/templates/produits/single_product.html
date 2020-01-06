@@ -1,0 +1,87 @@
+{%extends 'base.html'%}
+{% load static %}
+{% load humanize %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/single-product.css'%}">
+{% endblock styles %}
+
+{% block title %} {{produit.nom}} {% endblock title %}
+
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class='col-md-9'>
+      <div class='container-fluid text-dark '>
+        <div class='row'>
+          <div class='col-md-2'>
+              <img src="{%if produit.image2%}{{produit.image2.url}}{%endif%}" alt="" class='img-fluid image-select'>
+                <img src="{%if produit.image3%}{{produit.image3.url}}{%endif%}" alt="" class='img-fluid image-select'>
+
+          </div>
+          <div class='col-md-4 main-image'>
+            <img src="{{produit.image.url}}" alt="" class='img-fluid image-selected'>
+            <div class='zoom'></div>
+          </div>
+          <div class='col-md mt-md-2'>
+            <h2 class='product-title'>{{produit.nom}}</h2>
+            <hr>
+            <h6 class='text-day'>CATEGORIE: {{produit.categorie.nom}}</h6>
+            <h5 class='text-success mt-2'>{{produit.prix|intcomma}} DZD</h5>
+            <div class='row'>
+              <div class='col-md-3'>
+                QTT:
+                <div class='position-relative mx-auto' style='max-width: 80px;'>
+                  <div class="spinner-left"><i class='fa fa-minus center text-secondary'></i></div>
+                  <input type="number" class='cart-item-qtt text-center custom-input w-100' value=1 data-product={{produit.id}}>
+                  <div class="spinner-right"><i class='fa fa-plus center text-secondary'></i></div>
+                </div>
+              </div>
+              <div class='col-md'>
+                <a href="#" class="button bg-day add-to-cart" data-product={{produit.id}}> <small><i class="fa fa-shopping-cart"></i></small>  Ajouter au panier</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class='container border border-light'>
+        <div class='row'>
+          <div class='col-md-4 mb-2'>
+            <h5 class="text-day title-line mb-0">DESCRIPTION</h5>
+
+
+          </div>
+
+          <div class='col-md-11 text-secondary'>
+            <hr>
+            {{produit.description|safe}}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <h4>PRODUITS</h4>
+      <hr>
+      {% for product in random_products %}
+      <div class="row mb-1 border-bottom">
+        <div class="col-md-4">
+            <img src="{{product.image.url}}" alt="" class='img-fluid'>
+        </div>
+        <div class="col-md-">
+            <h5 class="text-secondary"><a href="{% url 'single_product' product.slug %}">{{product.nom}}</a></h5>
+            <h5 class="text-secondary"><a href="{% url 'single_product' product.slug %}"><small>{{product.prix|intcomma}} DZD</small></a></h5>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+ {% endblock body %}
+
+
+ {% block scripts %}
+  <script src="{% static 'js/single-product.js'%}"></script>
+  {% endblock scripts %}
