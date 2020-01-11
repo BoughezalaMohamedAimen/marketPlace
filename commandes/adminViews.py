@@ -60,8 +60,10 @@ class CommandeAdmin(LoginRequiredMixin,TemplateView):
         'commandes_all_count':commandes_list.count(),
         'etats':Etat.objects.all(),
         }
-        return render(request,'commandes/BackOffice/home_commande.html',context)
-
+        if request.user.is_superuser:
+            return render(request,'commandes/BackOffice/home_commande.html',context)
+        else:
+            return render(request,'commandes/BackOffice/commande_recu.html',context)
 
 
 class CommandePasseAdmin(LoginRequiredMixin,TemplateView):

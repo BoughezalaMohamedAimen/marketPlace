@@ -66,3 +66,8 @@ class UserPaymentForm(forms.ModelForm):
     class Meta:
         model=Payement
         fields='__all__'
+
+class DemandePayementForm(forms.ModelForm):
+    class Meta:
+        model=DemandePayement
+        fields='__all__'

@@ -10,8 +10,9 @@ from django.utils.safestring import mark_safe
 
 
 class ProduitAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nom', 'categorie','user','prix')
+    list_display = ('id', 'valid','motif','nom', 'categorie','user','prix')
     list_filter=('valid','categorie',)
+    search_fields = ('user__username', 'user__email','nom')
     readonly_fields = ["image_image1","image_image2","image_image3","image_image4"]
     def image_image1(self, obj):
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(

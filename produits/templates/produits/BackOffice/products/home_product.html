@@ -11,15 +11,15 @@
 {% block body %}
 
 
-<div class="container" style='overflow-x: scroll;'>
+<div class="container">
 <div class="row">
-  <div class="col-md">
+  <div class="col-md pb-3">
     <div class="card border-left-primary shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="{% url 'HomeProductAdmin' %}">Produits</a></div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{products_all_count}} <br> <a href="{% url 'NewProduct'%}" target="_blank" class="badge badge-primary">Ajouter produit</a> </div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="{% url 'HomeProductAdmin' %}">Arcicles</a></div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{user_product_count}} <br> <a href="{% url 'HomeProductAdmin' %}"  class="badge badge-primary">Tous les articles</a> </div>
           </div>
           <div class="col-auto">
             <i class="fas fa-box-open fa-2x text-gray-300"></i>
@@ -29,14 +29,14 @@
     </div>
   </div>
 
-  <div class="col-md">
+  <div class="col-md pb-3">
 
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Produit Validé</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{valid_products}} <br> <a href="#" target="_blank" class="badge badge-success etat" data-etat="valid">Voir la liste</a></div>
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Article Validé</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{valid_products}} <br> <a href="#" class="badge badge-success etat" data-etat="valid">Voir la liste</a></div>
           </div>
           <div class="col-auto">
             <i class="fas fa-check fa-2x text-gray-300"></i>
@@ -49,14 +49,14 @@
 
 
 
-  <div class="col-md">
+  <div class="col-md pb-3">
 
     <div class="card border-left-warning shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Produit en attente</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{wait_products}} <br> <a href="#" target="_blank" class="badge badge-warning etat" data-etat="wait">Voir la liste</a></div>
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Article en attente</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{wait_products}} <br> <a href="#"  class="badge badge-warning etat" data-etat="wait">Voir la liste</a></div>
           </div>
           <div class="col-auto">
             <i class="fas fa-clock fa-2x text-gray-300"></i>
@@ -69,14 +69,14 @@
 
 
 
-  <div class="col-md">
+  <div class="col-md pb-3">
 
     <div class="card border-left-danger shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Produit non valide</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{invalid_products}} <br> <a href="#" target="_blank" class="badge badge-danger etat" data-etat="invalid">Voir la liste</a></div>
+            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Article non valide</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{invalid_products}} <br> <a href="#"  class="badge badge-danger etat" data-etat="invalid">Voir la liste</a></div>
           </div>
           <div class="col-auto">
             <i class="fas fa-times fa-2x text-gray-300"></i>
@@ -92,7 +92,7 @@
     <div class="py-3"></div>
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Liste des produits</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Liste des articles</h6>
       </div>
       <div class="container py-2">
         <div class="row rtl">
@@ -123,7 +123,7 @@
 
               </form>
             </div>
-            <div class="col-md-2 ml-auto">
+            <div class="col-md-2 ml-auto d-none d-md-block">
             <b>  Selection: <span class='text-secondary selected-count'> (0)</span> </b>
             <select class='form-control' id="bulk-table-action" data-delete='{%url "DeleteProduct"%}'>
               <option value="" selected >Action</option>
@@ -131,7 +131,7 @@
               <option value='cat'>changer categorie</option>
             </select>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-1 d-none d-md-block">
             <br>
             <a  class="btn btn-secondary text-white" id='action'>Action</a>
           </div>
@@ -139,56 +139,59 @@
 
       </div>
       <hr>
-          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th><input type="checkbox" class='custom-checkbox custom-checkbox-all'></th>
-                <th>Etat</th>
-                <th class='bg-white'>Nom</th>
-                {%if request.user.is_superuser %}
-                <th class='bg-white'>vendeur</th>
-                {%endif%}
-                <th class='bg-white'>categorie</th>
-                <th class='bg-white'>prix</th>
-                <th class='bg-white'>stock</th>
-                <th class='bg-white'>image</th>
-                <th class='bg-white'>attributs</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th class='bg-white'> </th>
-                <th>Etat</th>
-                <th class='bg-white'>Nom</th>
-                {%if request.user.is_superuser %}
-                <th class='bg-white'>vendeur</th>
-                {%endif%}
-                <th class='bg-white'>categorie</th>
-                <th class='bg-white'>prix</th>
-                <th class='bg-white'>stock</th>
-                <th class='bg-white'>image</th>
-                <th class='bg-white'>attributs</th>
+      <div class=' d-none d-md-block'>
+        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class='custom-checkbox custom-checkbox-all'></th>
+              <th>Etat</th>
+              <th class='bg-white'>Nom</th>
+              {%if request.user.is_superuser %}
+              <th class='bg-white'>vendeur</th>
+              {%endif%}
+              <th class='bg-white'>categorie</th>
+              <th class='bg-white'>prix</th>
+              <th class='bg-white'>stock</th>
+              <th class='bg-white'>image</th>
+              <th class='bg-white'>attributs</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th class='bg-white'> </th>
+              <th>Etat</th>
+              <th class='bg-white'>Nom</th>
+              {%if request.user.is_superuser %}
+              <th class='bg-white'>vendeur</th>
+              {%endif%}
+              <th class='bg-white'>categorie</th>
+              <th class='bg-white'>prix</th>
+              <th class='bg-white'>stock</th>
+              <th class='bg-white'>image</th>
+              <th class='bg-white'>attributs</th>
 
-              </tr>
-            </tfoot>
-            <tbody>
-              {% for product in products %}
-              <tr>
-                <th class='bg-white'><input type="checkbox" class='custom-checkbox custom-checkbox-table-row'><a class='d-none' href='{% url "UpdateProduit" product.id %}' target='_blank'>{{product.id}}</a></th>
-                <th>{% if product.valid%}<span class="badge badge-success">Actif</span>{%elif product.motif %}<span class="badge badge-danger">{{product.motif}}</span>{%else%}<span class="badge badge-warning">en attente de confirmation</span>{%endif%}</th>
-                <th class='bg-white'><a href='{% url "UpdateProduit" product.id %}' target='_blank'><small>{{product.nom}}</small></a></th>
-                {%if request.user.is_superuser %}
-                <th class='bg-white'><small>{{product.user}}</small></th>
-                {%endif%}
-                <th class='bg-white'><small>{{product.categorie}}</small></th>
-                <th class='bg-white'><small>{{product.prix}}</small></th>
-                <th class='bg-white'><small>{{product.stock}}</small></th>
-                <th class='bg-white'>{% if product.image %} <img src="{{ product.image.url }}" class='table-img'> {% endif %} </th>
-                <th class='bg-white'><a href="{% url 'updateProductAttribute' product.id %}"><small>Attributs</small></a></th>
-              </tr>
-              {%endfor %}
-            </tbody>
-          </table>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <th class='bg-white'><input type="checkbox" class='custom-checkbox custom-checkbox-table-row'><a class='d-none' href='{% url "UpdateProduit" product.id %}' target='_blank'>{{product.id}}</a></th>
+              <th>{% if product.valid%}<span class="badge badge-success">Actif</span>{%elif product.motif %}<span class="badge badge-danger">{{product.motif}}</span>{%else%}<span class="badge badge-warning">en attente de confirmation</span>{%endif%}</th>
+              <th class='bg-white'><a href='{% url "UpdateProduit" product.id %}' target='_blank'><small>{{product.nom}}</small></a></th>
+              {%if request.user.is_superuser %}
+              <th class='bg-white'><small>{{product.user}}</small></th>
+              {%endif%}
+              <th class='bg-white'><small>{{product.categorie}}</small></th>
+              <th class='bg-white'><small>{{product.prix}}</small></th>
+              <th class='bg-white'><small>{{product.stock}}</small></th>
+              <th class='bg-white'>{% if product.image %} <img src="{{ product.image.url }}" class='table-img' id="image-table-{{forloop.counter}}"  data-image-target='#image-mobile-{{forloop.counter}}'> {% endif %} </th>
+              <th class='bg-white'><a href="{% url 'updateProductAttribute' product.id %}"><small>Attributs</small></a></th>
+            </tr>
+            {%endfor %}
+          </tbody>
+        </table>
+      </div>
+
 
 
     </div>
@@ -196,7 +199,12 @@
 
 </div>
 
-<div class="container">
+{% include 'produits/BackOffice/products/mobile_products.html' %}
+
+
+
+
+<div class="container pb-4">
 
 
   <span class="current">
@@ -276,8 +284,23 @@
     })
     $('.filter').click(function(){
       window.location.assign('{% url "HomeProductAdmin"%}'+'?cat='+$('select[name=cat]').val().join(',')+'&keyword='+$('input[name=keyword]').val()+'&etat='+$('input[name=etat]').val())
-
     })
+
+    $('.table-img').each(function(){
+      var base64 = getBase64Image(document.getElementById($(this).attr('id')));
+      $($(this).attr('data-image-target')).attr('src','data:image/png;base64,'+base64);
+    })
+
+    function getBase64Image(img) {
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/png");
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
   })
 </script>
 

@@ -78,11 +78,13 @@
               <tr>
 
                 <th class='bg-white'>heure</th>
+                {% if user.is_superuser %}
                 <th class='bg-white'>compte</th>
                 <th class='bg-white'>email</th>
                 <th class='bg-white'>adresse</th>
                 <th class='bg-white'>observation</th>
                 <th class='bg-white'>telephone</th>
+                {%endif%}
                 <th class='bg-white'>montant</th>
               </tr>
             </thead>
@@ -90,11 +92,13 @@
               <tr>
 
                 <th class='bg-white'>heure</th>
+                {% if user.is_superuser %}
                 <th class='bg-white'>compte</th>
                 <th class='bg-white'>email</th>
                 <th class='bg-white'>adresse</th>
                 <th class='bg-white'>observation</th>
                 <th class='bg-white'>telephone</th>
+                {%endif%}
                 <th class='bg-white'>montant</th>
 
               </tr>
@@ -103,11 +107,13 @@
               {% for payment in payments %}
               <tr>
                 <th class='bg-white'><small>{{payment.created}}</small></th>
+                {% if user.is_superuser %}
                 <th class='bg-white'><small>{{payment.user}}</small></th>
                 <th class='bg-white'><small>{{payment.user.email}}</small></th>
                 <th class='bg-white'><small>{{payment.user.userprofile.adresse}} {{payment.user.userprofile.wilaya}}</small></th>
                 <th class='bg-white'><small>{{payment.observation}}</small></th>
                 <th class='bg-white'><small>{{payment.user.userprofile.telephone}}</small> </th>
+                {%endif%}
                 <th class='bg-white'>{{payment.montant}}
                   {% if request.user.is_superuser %}
                   <small><a href="{%url 'DeletePaymentAdmin' payment.id %}"><i class="fa fa-times text-danger"></i></a></small>

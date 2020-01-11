@@ -28,7 +28,7 @@ class ProductAdmin(LoginRequiredMixin,TemplateView):
         if request.GET.get('etat')=='wait':
             filter_data['motif__isnull']=True
             filter_data['valid']=False
-        
+
 
         q = Q()
         if request.GET.get('keyword'):
@@ -65,7 +65,8 @@ class ProductAdmin(LoginRequiredMixin,TemplateView):
         'categories':Categorie.objects.all(),
         'valid_products':products_of_user.filter(valid='True').count(),
         'wait_products':products_of_user.filter(valid='False',motif__isnull='True').count(),
-        'invalid_products':products_of_user.filter(valid='False').exclude(motif__isnull='True').count()
+        'invalid_products':products_of_user.filter(valid='False').exclude(motif__isnull='True').count(),
+        'user_product_count':Produit.objects.filter(user=request.user).count()
         }
         return render(request,'produits/BackOffice/products/home_product.html',context)
 

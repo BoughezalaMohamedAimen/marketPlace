@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .forms import UserPaymentForm
+from .forms import UserPaymentForm,DemandePayementForm
 
 
 
@@ -106,3 +106,18 @@ class DeletePayementAdmin(LoginRequiredMixin,TemplateView):
             return redirect('HomePaymentAdmin')
         else:
             return redirect('HomeAdmin')
+
+class DemandePayementAdmin(LoginRequiredMixin,TemplateView):
+    def get(self,request):
+        form=DemandePayementForm()
+        return render(request,'accounts/BackOffice/demande_payement_form.html',{'form':form})
+
+    def post(self,request):
+        form=DemandePayementForm(request.POST)
+        if form.is_valid():
+            demande=form.save(commit=False)
+            demande.user=request.user
+            demande.save()
+            return redirect('HomeAccountAdmin')
+        else:
+            return render(request,'accounts/BackOffice/demande_payement_form.html',{'form':form})

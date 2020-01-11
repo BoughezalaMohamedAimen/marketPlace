@@ -1,0 +1,42 @@
+<div class="container d-md-none">
+  <div class="row">
+    {% for product in products %}
+
+    <div class="col-md-4">
+      <div class="card shadow mb-4 border">
+              <a href="#collapseCommande{{ forloop.counter }}" class="d-block card-header py-3 bg-primary" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCommande{{ forloop.counter }}">
+                <h6 class="m-0 font-weight-bold text-white">{{product.nom}}</h6>
+              </a>
+              <div class="collapse" id="collapseCommande{{ forloop.counter }}" style="">
+                <div class="card-body">
+                  <b class="text-primary"> <i class='fa fa-calendar'></i> Etat d'annonce:</b> <br>
+                  {% if product.valid%}<span class="badge badge-success">Actif</span>{%elif product.motif %}<span class="badge badge-danger">{{product.motif}}</span>{%else%}<span class="badge badge-warning">en attente de confirmation</span>{%endif%}  <hr>
+
+                    <b class='text-primary'> <i class="fa fa-box-open"></i> Categorie:</b><br>
+                    <span>{{product.categorie}}</span>
+                    <hr>
+                    <b class='text-primary'> <i class="fa fa-box-open"></i> Prix:</b><br>
+                    <span>{{product.prix}}</span>
+                    <br>
+                    <b class='text-primary'> <i class="fa fa-box-open"></i> Stock:</b><br>
+                    <span>{{product.stock}}</span>
+                    <br>
+
+                    {% if product.image %} <img  class='img-fluid ' id='image-mobile-{{forloop.counter}}'> {% endif %}
+                    <hr>
+
+
+
+                  <div class="text-right">
+                    <a href="{% url 'UpdateProduit' product.id %}" class="badge badge-primary">Modifier</a>
+                    <a href="{% url 'updateProductAttribute' product.id %}" class="badge badge-success">Gestion attributs</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+    </div>
+
+    {%endfor%}
+  </div>
+</div>

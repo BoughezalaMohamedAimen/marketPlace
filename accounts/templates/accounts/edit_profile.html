@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">commandes passé (mois)</div>
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">commandes effectuées <br>  <small>(articles achetés)</small></div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">{{user.commande_set.all|length}} <br> <a href="{% url 'HomeCommandePasseAdmin'%}" target="_blank" class="badge badge-primary">Consulter la liste</a></div>
             </div>
             <div class="col-auto">
@@ -32,7 +32,7 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">commandes reçu (mois)</div>
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">commandes reçu <br><small>(articles vendus)</small></div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">{{commande_m|length}} <br> <a href="{% url 'HomeCommandeAdmin'%}" target="_blank" class="badge badge-info">Consulter la liste</a></div>
             </div>
             <div class="col-auto">
@@ -49,8 +49,8 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Solde</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{request.user.userprofile.solde|intcomma}} DZD <br> <a href="{% url 'NewProduct'%}" target="_blank" class="badge badge-success">Demander Payment</a> </div>
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Porte feuille <br> <small>(votre solde)</small></div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{request.user.userprofile.solde|intcomma}} DZD <br> <a href="{% url 'DemandePayementAdmin'%}" target="_blank" class="badge badge-success">Demander Payment</a> </div>
             </div>
             <div class="col-auto">
               <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -69,7 +69,7 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a href="{% url 'HomeProductAdmin' %}" class="text-warning">Produits</a></div>
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a href="{% url 'HomeProductAdmin' %}" class="text-warning">Mes articles <br> <small>(liste des articles)</small></a></div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">{{user.produit_set.all|length}} <br> <a href="{% url 'NewProduct'%}" target="_blank" class="badge badge-warning">Ajouter produit</a></div>
             </div>
             <div class="col-auto">

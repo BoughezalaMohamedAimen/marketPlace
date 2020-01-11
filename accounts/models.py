@@ -10,6 +10,8 @@ from region.models import *
 
 
 
+METHODE_PAYMENT_CHOICES=(('Virement ccp','Virement ccp'),('Virement Bancaire','Virement Bancaire'),('Cash','Cash'),)
+
 def createactive():
     return hashlib.md5(str(datetime.now()).encode()).hexdigest()
 
@@ -44,6 +46,13 @@ class Payement(models.Model):
     montant=models.PositiveIntegerField()
     observation=models.TextField(null='True')
 
+
+class DemandePayement(models.Model):
+    created= models.DateTimeField(default=datetime.now, blank='True')
+    user=models.ForeignKey(User,on_delete=models.CASCADE,blank='True')
+    montant=models.PositiveIntegerField()
+    methode=models.CharField(max_length=255,choices=METHODE_PAYMENT_CHOICES)
+    message=models.TextField(blank='True',null='True')
 
 from django.dispatch import receiver
 

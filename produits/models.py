@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.db.models import Count
 
 
+ETAT_CHOICES=(('neuf','neuf'),('Tres bon etat','Tres bon etat'),('Bon etat','Bon etat'),('Satisfaisant','Satisfaisant'))
+
 
 class Motif(models.Model):
     description=models.CharField(max_length=255)
@@ -32,6 +34,7 @@ class Produit(models.Model):
     prix=models.PositiveIntegerField(default=0)
     stock=models.PositiveIntegerField(null='True')
     prix_promotionel=models.PositiveIntegerField(default=0)
+    etat=models.CharField(max_length=255,choices=ETAT_CHOICES,default='neuf')
     # attribut=models.ManyToManyField(Attribut,null='True')
     image=models.ImageField(upload_to='product',blank='True',null='True')
     image2=models.ImageField(upload_to='product',blank='True',null='True')

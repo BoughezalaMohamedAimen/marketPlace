@@ -18,7 +18,7 @@ urlpatterns = [
 
         #       COMMANDES ADMIN  URLS
         path('commandes/', CommandeAdmin.as_view(),name='HomeCommandeAdmin'),
-        path('commandes/passe', CommandePasseAdmin.as_view(),name='HomeCommandePasseAdmin'), 
+        path('commandes/passe', CommandePasseAdmin.as_view(),name='HomeCommandePasseAdmin'),
         path('commandes/<int:id>', SingleCommande.as_view(),name='SingleCommande'),
         path('commandes/delete/', DeleteCommande.as_view(),name='DeleteCommande'),
         path('commandes/etat-bulk/', CommandeEtatBulk.as_view(),name='CommandeEtatBulk'),
@@ -29,7 +29,7 @@ urlpatterns = [
         path('accounts/', AccountAdmin.as_view(),name='HomeAccountAdmin'),
         path('payments/', PayementAdmin.as_view(),name='HomePaymentAdmin'),
         path('payments/delete/<int:id>', DeletePayementAdmin.as_view(),name='DeletePaymentAdmin'),
-
+        path('payments/demande/', DemandePayementAdmin.as_view(),name='DemandePayementAdmin'),
 
         # #       REGIONS ADMIN  URLS
         # path('regions/', WilayaAdmin.as_view(),name='HomeWilayaAdmin'),
