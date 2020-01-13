@@ -19,8 +19,9 @@ class CartMiddleware:
     def process_view(self, request, view_func, view_args, view_kwargs):
         assert hasattr(request, 'user')
         try:
-            Cart.objects.filter(created_at__lte=timezone.now() - timedelta(days=3),user='null').delete()
-        except:
+            Cart.objects.filter(created_at__lte=timezone.now() - timedelta(days=7),user__isnull=True).delete()
+        except Exception as e:
+            print(e)
             pass
 
         if request.user.is_authenticated:

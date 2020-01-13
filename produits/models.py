@@ -11,6 +11,8 @@ from django.db.models import Count
 
 ETAT_CHOICES=(('neuf','neuf'),('Tres bon etat','Tres bon etat'),('Bon etat','Bon etat'),('Satisfaisant','Satisfaisant'))
 
+def content_file_name(instance, filename):
+    return 'products/'.join(['', instance.user.username+'/', filename])
 
 class Motif(models.Model):
     description=models.CharField(max_length=255)
@@ -36,10 +38,10 @@ class Produit(models.Model):
     prix_promotionel=models.PositiveIntegerField(default=0)
     etat=models.CharField(max_length=255,choices=ETAT_CHOICES,default='neuf')
     # attribut=models.ManyToManyField(Attribut,null='True')
-    image=models.ImageField(upload_to='product',blank='True',null='True')
-    image2=models.ImageField(upload_to='product',blank='True',null='True')
-    image3=models.ImageField(upload_to='product',blank='True',null='True')
-    image4=models.ImageField(upload_to='product',blank='True',null='True')
+    image=models.ImageField(upload_to=content_file_name,blank='True',null='True')
+    image2=models.ImageField(upload_to=content_file_name,blank='True',null='True')
+    image3=models.ImageField(upload_to=content_file_name,blank='True',null='True')
+    image4=models.ImageField(upload_to=content_file_name,blank='True',null='True')
 
     def __str__(self):
         return self.nom
@@ -107,7 +109,7 @@ class ProductAttribute(models.Model):
     #     unique_together = ('produit', 'attributevalues',)
 
 
-from django.db.models.signals import pre_save,post_save
+from django.db.models.signals import pre_save,post_save,post_delete
 from django.dispatch import receiver
 
 
@@ -115,3 +117,12 @@ from django.dispatch import receiver
 def my_handler(sender, **kwargs):
     if not kwargs['instance'].prix:
         kwargs['instance'].prix=kwargs['instance'].produit.prix
+
+
+
+@receiver(post_delete, sender=Produit)
+def submission_delete(sender, instance, **kwargs):
+    instance.image.delete(False)
+    instance.image2.delete(False)
+    instance.image3.delete(False)
+    instance.image4.delete(False)

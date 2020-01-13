@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'region',
     'accounts',
     'produits',
@@ -48,8 +50,11 @@ INSTALLED_APPS = [
     'cart',
     'commandes',
     'BackOffice',
+    'robots',
 
 ]
+
+SITE_ID=1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

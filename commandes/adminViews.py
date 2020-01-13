@@ -82,7 +82,10 @@ class CommandePasseAdmin(LoginRequiredMixin,TemplateView):
 
 class SingleCommande(LoginRequiredMixin,TemplateView):
     def get(self,request,id):
-        return render(request,'commandes/BackOffice/update_commande.html',{'commande':Commande.objects.get(id=id)})
+        if request.user.is_superuser:
+            return render(request,'commandes/BackOffice/update_commande.html',{'commande':Commande.objects.get(id=id)})
+        else:
+            return redirect('HomeCommandeAdmin')    
 
 
 

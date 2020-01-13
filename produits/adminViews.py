@@ -7,6 +7,7 @@ from .models import *
 from categories.models import *
 from django.core.paginator import Paginator
 import datetime
+import os
 
 #####---------------------------------------------------------------------------------------------------#####
 #-------------------------------------PRODUCTS-ADMIN-VIEWS--------------------------------------------------#
@@ -103,18 +104,38 @@ class UpdateProduitAdmin(LoginRequiredMixin,TemplateView):
 
     def post(self,request,id=0):
         produit=Produit.objects.get(id=id)
-        # produitImageOld=produit.image.path
+        produitImageOld=produit.image.path
+        produitImage2Old=produit.image2.path
+        produitImage3Old=produit.image3.path
+        produitImage4Old=produit.image4.path
         if request.user.is_superuser or request.user==produit.user :
             produit.updated=datetime.datetime.now()
             form=ProduitFormUpdate(request.POST,request.FILES,instance=produit)
             if form.is_valid():
-                # if request.FILES:
-                #     try:
-                #         os.remove(produitImageOld)
-                #     except:
-                #         pass
-                # else:
-                #     print('none')
+                if request.FILES:
+                    if request.FILES.get('image'):
+                        print('image1')
+                        try:
+                            os.remove(produitImageOld)
+                        except Exception as e:
+                            print(e)
+                    if request.FILES.get('image2'):
+                        try:
+                            os.remove(produitImage2Old)
+                        except:
+                            pass
+                    if request.FILES.get('image3'):
+                        try:
+                            os.remove(produitImage3Old)
+                        except:
+                            pass
+                    if request.FILES.get('image4'):
+                        try:
+                            os.remove(produitImage4Old)
+                        except:
+                            pass
+
+
                 form.save()
                 return redirect('HomeProductAdmin')
             else:

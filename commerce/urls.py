@@ -18,8 +18,16 @@ from django.urls import path,re_path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from region.views import GetCommune
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import *
+
+sitemaps={
+    'produits':ProduitSitemap,
+}
 
 urlpatterns = [
+    path('sitemap.xml', sitemap,{'sitemaps':sitemaps}),
+    path('robots.txt', include('robots.urls')),
     path('admin/', admin.site.urls),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     re_path(r'^account/', include('accounts.urls')),
